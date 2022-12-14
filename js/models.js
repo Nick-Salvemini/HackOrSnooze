@@ -77,7 +77,7 @@ class StoryList {
     // UNIMPLEMENTED: complete this function! 
     const response = await axios.post('https://hack-or-snooze-v3.herokuapp.com/stories', { 'token': user.loginToken, 'story': newStory });
 
-    return newStory = new Story
+    return newStory = new Story(response.title, response.author, response.url, user)
   }
 }
 
