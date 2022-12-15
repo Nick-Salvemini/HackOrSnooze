@@ -50,3 +50,21 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function submitStoryToPage() {
+  const storyAuthor = $('#addStoryAuthor').val()
+  const storyTitle = $('#addStoryTitle').val()
+  const storyUrl = $('#addStoryUrl').val()
+
+  // const newStory = { 'author': storyAuthor, 'title': storyTitle, 'url': storyUrl }
+
+  // let addNewStory = 
+
+  console.log({ 'author': storyAuthor, 'title': storyTitle, 'url': storyUrl })
+
+
+  return await storyList.addStory(currentUser, { title: storyTitle, author: storyAuthor, url: storyUrl })
+}
+
+// const $submitButton = $('#submit')
+// $submitButton.on('click',)

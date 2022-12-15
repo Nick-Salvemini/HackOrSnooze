@@ -75,9 +75,17 @@ class StoryList {
 
   async addStory(user, newStory) {
     // UNIMPLEMENTED: complete this function! 
-    const response = await axios.post('https://hack-or-snooze-v3.herokuapp.com/stories', { 'token': user.loginToken, 'story': newStory });
+    // const response = await axios.post('https://hack-or-snooze-v3.herokuapp.com/stories', { 'token': user.loginToken, 'story': newStory });
+    const token = user.loginToken;
+    const response = await axios({
+      method: 'POST',
+      url: `${BASE_URL}/stories`,
+      data: { token, story: newStory }
+    });
 
-    return newStory = new Story(response.title, response.author, response.url, user)
+    console.log(response)
+
+    return newStory = new Story(response.data.story)
   }
 }
 
