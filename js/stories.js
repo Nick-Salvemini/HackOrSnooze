@@ -66,6 +66,9 @@ async function submitStoryToPage() {
   return await storyList.addStory(currentUser, { title: storyTitle, author: storyAuthor, url: storyUrl })
 }
 
-const $submitButton = $('#submit')
+$('#submitButton').on('click', function (evt) {
+  evt.preventDefault();
+  submitStoryToPage();
+}
+)
 
-$submitButton.on('click', submitStoryToPage)
