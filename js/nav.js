@@ -33,10 +33,14 @@ function updateNavOnLogin() {
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
+
+  $('#nav-submit').show()
+  $('#nav-favorites').show()
+  $('#nav-myStories').show()
 }
 
 function navShowSubmitForm() {
-  $('form').show()
+  $('#submitForm').show()
 }
 
 const $navSubmit = $('#nav-submit')

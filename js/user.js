@@ -13,6 +13,8 @@ async function login(evt) {
   console.debug("login", evt);
   evt.preventDefault();
 
+  // $('#nav-submit').classList.remove('hidden')
+
   // grab the username and password
   const username = $("#login-username").val();
   const password = $("#login-password").val();
@@ -25,6 +27,8 @@ async function login(evt) {
 
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
+
+
 }
 
 $loginForm.on("submit", login);
@@ -113,4 +117,66 @@ function updateUIOnUserLogin() {
   $allStoriesList.show();
 
   updateNavOnLogin();
+}
+
+
+
+$('ol').on('click', 'i', function (evt) {
+
+  if (evt.target.classList.contains('far')) {
+    addFavorite(evt.target)
+  } else {
+    removeFavorite(evt.target)
+  }
+
+
+}
+)
+
+async function addFavorite(element) {
+  element.classList.add('fas');
+  element.classList.remove('far');
+
+  const storyId = ($(element).parent().parent().attr('id'))
+
+  // const response = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`, { token: currentUser.loginToken })
+
+  const response = await axios({
+    method: 'POST',
+    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+    data: { token: currentUser.loginToken }
+  })
+
+  console.log(response)
+}
+
+async function removeFavorite(element) {
+  element.classList.add('far');
+  element.classList.remove('fas')
+
+  const storyId = ($(element).parent().parent().attr('id'))
+
+  // const response = await axios.delete(`${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`, { token: currentUser.loginToken })
+
+  const response = await axios({
+    method: 'DELETE',
+    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+    data: { token: currentUser.loginToken }
+  }
+  )
+
+
+  console.log(response)
+}
+
+async function getUserFavorites() {
+  const response = await axios({
+    method: 'GET',
+    url: `${BASE_URL}/users/${currentUser.username}`,
+    // url: `${BASE_URL}/users/`,
+    // data: { token: currentUser.loginToken }
+    // data: { username: currentUser.loginToken }
+  })
+
+  console.log(response)
 }

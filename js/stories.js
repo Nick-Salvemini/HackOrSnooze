@@ -25,6 +25,11 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+
+      <span>
+      <i class="far fa-star"></i>
+      </span>
+
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -51,24 +56,64 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+
+
+
+
+
+
 async function submitStoryToPage() {
   const storyAuthor = $('#addStoryAuthor').val()
   const storyTitle = $('#addStoryTitle').val()
   const storyUrl = $('#addStoryUrl').val()
 
-  // const newStory = { 'author': storyAuthor, 'title': storyTitle, 'url': storyUrl }
+  // console.log({ 'author': storyAuthor, 'title': storyTitle, 'url': storyUrl })
 
-  // let addNewStory = 
+  const submittedStory = await storyList.addStory(currentUser, { title: storyTitle, author: storyAuthor, url: storyUrl })
 
-  console.log({ 'author': storyAuthor, 'title': storyTitle, 'url': storyUrl })
+  // console.log(submittedStory)
 
+  const $storyOl = $('#all-stories-list')
+  const hostname = submittedStory.getHostName()
 
-  return await storyList.addStory(currentUser, { title: storyTitle, author: storyAuthor, url: storyUrl })
+  console.log('test1')
+
+  $storyOl.add(`<li id='${submittedStory.storyId}'>
+  ::marker
+  <a href='${submittedStory.url}' target='a_blank' class='story-link'> ${submittedStory.title} </a>
+  <small class='story-hostname'>${hostname}</small>
+  <small class='story-author'>by ${submittedStory.author}</small>
+  <small class='story-user'>posted by ${submittedStory.username}</small>
+  </li>`)
+
+  console.log('test2')
 }
 
 $('#submitButton').on('click', function (evt) {
   evt.preventDefault();
   submitStoryToPage();
+
+  $('#submitForm').hide()
+  $('#addStoryAuthor').val('')
+  $('#addStoryTitle').val('')
+  $('#addStoryUrl').val('')
 }
 )
+
+function generateFavoritesMarkup(user) {
+  $allStoriesList.empty();
+
+
+  const favArray = user.favorites
+
+  for (let favStory of favArray) {
+    let $story = generateStoryMarkup(favStory);
+
+    $allStoriesList.append($story)
+  }
+}
+
+$('#nav-favorites').on('click', function () {
+  generateFavoritesMarkup(currentUser)
+})
 
