@@ -117,3 +117,19 @@ $('#nav-favorites').on('click', function () {
   generateFavoritesMarkup(currentUser)
 })
 
+function generateMyStoriesMarkup(user) {
+  $allStoriesList.empty();
+
+
+  const myStoriesArray = user.ownStories
+
+  for (let myStory of myStoriesArray) {
+    let $myStory = generateStoryMarkup(myStory);
+
+    $allStoriesList.append($myStory)
+  }
+}
+
+$('#nav-myStories').on('click', function () {
+  generateMyStoriesMarkup(currentUser)
+})
